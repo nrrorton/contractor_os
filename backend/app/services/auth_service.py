@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas.auth import LoginRequest
 from app.utils.security import verify_password
+from app.utils.jwt import create_access_token
 
 
 def authenticate_user(
@@ -30,4 +31,10 @@ def authenticate_user(
             detail='Invalid credentials'
         )
     
-    return user
+    access_token = create_access_token(
+        {
+            "sub": str(user.id)
+        }
+    )
+    
+    return access_token
