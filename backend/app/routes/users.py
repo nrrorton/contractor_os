@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.schemas.user import UserCreate, UserResponse
 from app.database import get_db
 from app.services.user_service import create_user
+from app.dependencies.auth import get_current_user
 
 
 router = APIRouter()
@@ -15,3 +16,10 @@ def register(
 ):
 
     return create_user(db, user)
+
+
+@router.get("/users/me", response_model=UserResponse)
+def get_me(
+    current_user: User = Depends(get_current_user)
+):
+    return current_user
