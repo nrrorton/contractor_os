@@ -9,10 +9,7 @@ from app.services.auth_service import authenticate_user
 router = APIRouter()
 
 
-@router.post(
-        "/auth/login",
-        response_model=TokenResponse
-)
+@router.post("/auth/login", response_model=TokenResponse)
 def login(
     login_data: LoginRequest,
     db: Session = Depends(get_db)

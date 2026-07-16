@@ -43,3 +43,25 @@ class ClientResponse(BaseModel):
     model_config = {
         "from_attributes": True
     }
+
+
+class ClientUpdate(BaseModel):
+
+    company_name: str | None = Field(
+        default=None,
+        max_length=100
+    )
+
+    contact_name: str | None = Field(
+        default=None,
+        max_length=100
+    )
+
+    contact_email: EmailStr | None = None
+
+    phone: str | None = Field(
+        default=None,
+        max_length=25
+    )
+
+    notes: str | None = None
