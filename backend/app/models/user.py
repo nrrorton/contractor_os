@@ -7,7 +7,7 @@ from app.database import Base
 
 class User(Base):
 
-    __tablename__ = "users"
+    __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(
         primary_key=True,
@@ -43,6 +43,11 @@ class User(Base):
     )
 
     clients = relationship(
-        "Client",
-        back_populates="user"
+        'Client',
+        back_populates='user'
+    )
+
+    projects = relationship(
+        'Project',
+        back_populates='user'
     )

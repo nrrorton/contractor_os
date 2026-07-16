@@ -41,7 +41,7 @@ class ClientResponse(BaseModel):
     created_at: datetime
 
     model_config = {
-        "from_attributes": True
+        'from_attributes': True
     }
 
 

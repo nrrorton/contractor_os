@@ -7,9 +7,9 @@ from app.database import Base
 
 
 
-class Client(Base):
-    
-    __tablename__ = 'clients'
+class Project(Base):
+
+    __tablename__ = 'projects'
 
     id: Mapped[int] = mapped_column(
         primary_key=True
@@ -20,28 +20,24 @@ class Client(Base):
         nullable=False
     )
 
-    company_name: Mapped[str] = mapped_column(
+    client_id: Mapped[int] = mapped_column(
+        ForeignKey('clients.id'),
+        nullable=False
+    )
+
+    name: Mapped[str] = mapped_column(
         String(100),
         nullable=False
     )
 
-    contact_name: Mapped[str] = mapped_column(
-        String(100),
+    description: Mapped[str | None] = mapped_column(
         nullable=True
     )
 
-    contact_email: Mapped[str | None] = mapped_column(
-        String(255),
-        nullable=True
-    )
-
-    phone: Mapped[str | None] = mapped_column(
-        String(25),
-        nullable=True
-    )
-
-    notes: Mapped[str | None] = mapped_column(
-        nullable=True
+    status: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        default='active'
     )
 
     created_at: Mapped[datetime] = mapped_column(
@@ -56,10 +52,10 @@ class Client(Base):
 
     user = relationship(
         'User',
-        back_populates='clients'
+        back_populates='projects'
     )
 
-    projects = relationship(
-        'Project',
-        back_populates='client'
+    client = relationship(
+        'Client',
+        back_populates='projects'
     )

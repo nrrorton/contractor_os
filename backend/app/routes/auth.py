@@ -9,7 +9,7 @@ from app.services.auth_service import authenticate_user
 router = APIRouter()
 
 
-@router.post("/auth/login", response_model=TokenResponse)
+@router.post('/auth/login', response_model=TokenResponse)
 def login(
     login_data: LoginRequest,
     db: Session = Depends(get_db)
@@ -17,6 +17,6 @@ def login(
     
     token = authenticate_user(db, login_data)
     return {
-        "access_token": token,
-        "token_type": "bearer"
+        'access_token': token,
+        'token_type': 'bearer'
     }
