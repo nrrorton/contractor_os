@@ -54,8 +54,9 @@ Completed:
 - Database integration
 - Initial user model
 - User registration flow
-
-Next:
 - Client management
 - Project management
+
+Next:
 - Time tracking
+- Frontend
