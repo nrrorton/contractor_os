@@ -1,4 +1,6 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
+
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.models.project import Project
@@ -47,18 +49,58 @@ def create_time_entry(
 
 def get_time_entries(
         db: Session,
-        current_user: User
+        current_user: User,
+        project_id: int | None = None,
+        billable: bool | None = None,
+        start_date: date | None = None,
+        end_date: date | None = None,
+        limit: int = 25,
+        offset: int = 0,
+        sort: str = '-work_date'
 ):
     
-    return (
+    query = (
         db.query(TimeEntry).filter(
             TimeEntry.user_id == current_user.id,
             TimeEntry.archived_at.is_(None)
-        ).order_by(
-            TimeEntry.workd_date.desc(),
-            TimeEntry.id.desc()
-        ).all()
+        )
     )
+
+    if project_id is not None:
+        query = query.filter(TimeEntry.project_id == project_id)
+
+    if billable is not None:
+        query = query.filter(TimeEntry.billable == billable)
+
+    if start_date is not None:
+        query = query.filter(TimeEntry.work_date >= start_date)
+
+    if end_date is not None:
+        query = query.filter(TimeEntry.work_date <= end_date)
+
+    descending = sort.startswith('-')
+    sort_field = sort.lstrip('-')
+
+    allowed_sorts = {
+        'work_date': TimeEntry.work_date,
+        'hours': TimeEntry.hours,
+        'created_at': TimeEntry.created_at
+    }
+
+    column = allowed_sorts.get(sort_field)
+
+    if column is None:
+        column = TimeEntry.work_date
+        descending = True
+
+    if descending:
+        query = query.order_by(column.desc())
+    else:
+        query = query.order_by(column.asc())
+
+    query = query.order_by(TimeEntry.id.desc())
+    
+    return (query.offset(offset).limit(limit).all())
 
 
 def get_time_entry(
@@ -158,3 +200,54 @@ def archive_time_entry(
     db.refresh(entry)
 
     return entry
+
+
+def get_time_entry_summary(
+        db: Session,
+        current_user: User
+):
+    
+    query = (
+        db.query(TimeEntry).filter(
+            TimeEntry.user_id == current_user.id,
+            TimeEntry.archived_at.is_(None)
+        )
+    )
+
+    entry_count = query.count()
+
+    total_hours = (
+        query.with_entities(func.sum(TimeEntry.hours)).scalar()
+    )
+
+    billable_hours = (
+        query.filter(
+            TimeEntry.billable == True
+        ).with_entities(func.sum(TimeEntry.hours)).scalar()
+    )
+
+    non_billable_hours = (
+        query.filter(
+            TimeEntry.billable == False
+        ).with_entities(func.sum(TimeEntry.hours)).scalar()
+    )
+
+    billable_amount = (
+        query.filter(
+            TimeEntry.billable == True
+        ).with_entities(
+            func.sum(TimeEntry.hours * TimeEntry.hourly_rate)).scalar()
+    )
+
+    total_hours = total_hours or 0
+    billable_hours = billable_hours or 0
+    non_billable_hours = non_billable_hours or 0
+    billable_amount = billable_amount or 0
+
+    return {
+        'entry_count': entry_count,
+        'total_hours': total_hours,
+        'billable_hours': billable_hours,
+        'non_billable_hours': non_billable_hours,
+        'billable_amount': billable_amount
+    }

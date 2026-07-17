@@ -53,3 +53,13 @@ class TimeEntryUpdate(BaseModel):
 
     started_at: datetime | None = None
     ended_at: datetime | None = None
+
+
+class TimeEntrySummary(BaseModel):
+
+    entry_count: int
+    total_hours: float
+    billable_hours: float
+    non_billable_hours: float
+    billable_amount: float
+    
