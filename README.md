@@ -56,7 +56,7 @@ Completed:
 - User registration flow
 - Client management
 - Project management
+- Time tracking
 
 Next:
-- Time tracking
 - Frontend
