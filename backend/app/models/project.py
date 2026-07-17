@@ -59,3 +59,8 @@ class Project(Base):
         'Client',
         back_populates='projects'
     )
+
+    time_entries = relationship(
+        'TimeEntry',
+        back_populates='project'
+    )

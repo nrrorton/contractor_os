@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
 from app.database import engine, Base
-from app.models import user, client, project
-from app.routes import users, auth, clients, projects
+from app.models import user, client, project, time_entry
+from app.routes import users, auth, clients, projects, time_entries
 
 
 Base.metadata.create_all(bind=engine)
@@ -17,6 +17,7 @@ app.include_router(users.router)
 app.include_router(auth.router)
 app.include_router(clients.router)
 app.include_router(projects.router)
+app.include_router(time_entries.router)
 
 
 @app.get('/')
