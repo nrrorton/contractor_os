@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import api from '../services/api'
+import useAuth from '../hooks/useAuth'
 
 
 
@@ -9,14 +10,16 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const { login } = useAuth()
+
+    const navigate = useNavigate()
+
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault()
 
-        const response = await api.post('/auth/login', {
-            email, password
-        })
+        await login(email, password)
 
-        localStorage.setItem('access_token', response.data.access_token)
+        navigate('/dashboard')
     }
 
     return (

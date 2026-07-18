@@ -1,7 +1,18 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+import useAuth from '../hooks/useAuth'
 
 
 function Navbar() {
+
+    const { logout } = useAuth()
+    const navigate = useNavigate()
+
+    function handleLogout() {
+        logout()
+        navigate('/login')
+    }
+
     return (
         <nav>
             <h2>ContractorOS</h2>
@@ -19,6 +30,10 @@ function Navbar() {
                     <Link to="/projects">Projects</Link>
                 </li>
             </ul>
+            
+            <button onClick={handleLogout}>
+                Logout
+            </button>
         </nav>
     )
 }
