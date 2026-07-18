@@ -129,8 +129,7 @@ def update_time_entry_router(
     return entry
 
 
-@router.patch('/time-entries/{time_entry_id}/archive',
-              response_model=TimeEntryResponse)
+@router.patch('/time-entries/{time_entry_id}/archive', response_model=TimeEntryResponse)
 def archive_time_entry_router(
     time_entry_id: int,
     db: Session = Depends(get_db),

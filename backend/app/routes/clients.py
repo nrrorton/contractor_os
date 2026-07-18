@@ -32,7 +32,7 @@ def display_clients(
     return get_clients(db, current_user)
 
 
-@router.get('clients/{client_id}', response_model=ClientResponse)
+@router.get('/clients/{client_id}', response_model=ClientResponse)
 def display_client(
     client_id: int,
     db: Session = Depends(get_db),
@@ -50,7 +50,7 @@ def display_client(
     return client
 
 
-@router.put('clients/{client_id}', response_model=ClientResponse)
+@router.put('/clients/{client_id}', response_model=ClientResponse)
 def update_client_router(
     client_id: int,
     client_update: ClientUpdate,
