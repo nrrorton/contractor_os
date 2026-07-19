@@ -4,7 +4,7 @@ ContractorOS is a full-stack contractor management application designed to help 
 
 ## Tech Stack
 
-### Frontend (When I soon get to it)
+### Frontend 
 - React
 - TypeScript
 - Tailwind CSS
@@ -71,6 +71,7 @@ ContractorOS frontend status:
     - Dashboard
     - Clients
     - Projects
+    - Time Entries
 
 - FastAPI communication working
 - Axios service created
@@ -79,7 +80,10 @@ ContractorOS frontend status:
 - JWT stored in localStorage
 
 Later:
-- Create AuthContext
-- Manage authentication state globally
-- Protect application routes
-- Add authenticated API requests
+- Error handling
+- Form validation
+- Edit functionality
+- Timer functionality
+
+Last:
+- Improve UI styling significantly
