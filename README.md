@@ -82,5 +82,4 @@ Later:
 - Create AuthContext
 - Manage authentication state globally
 - Protect application routes
-- Redirect login → dashboard
 - Add authenticated API requests

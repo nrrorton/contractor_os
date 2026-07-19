@@ -36,13 +36,13 @@ function Clients() {
             notes: notes || null
         })
 
+        await fetchClients()
+
         setCompanyName('')
         setContactName('')
         setContactEmail('')
         setPhone('')
         setNotes('')
-
-        await fetchClients()
     }
 
     return (

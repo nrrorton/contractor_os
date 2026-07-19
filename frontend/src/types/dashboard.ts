@@ -1,7 +1,4 @@
 
-
-
-
 export interface TimeSummary {
 
     entry_count: number
