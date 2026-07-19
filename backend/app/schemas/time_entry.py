@@ -47,7 +47,7 @@ class TimeEntryUpdate(BaseModel):
     description: str | None = None
     billable: bool | None = None
     hourly_rate: float | None = Field(
-        deafult=None,
+        default=None,
         ge=0
     )
 

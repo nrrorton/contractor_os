@@ -29,6 +29,10 @@ function Navbar() {
                 <li>
                     <Link to="/projects">Projects</Link>
                 </li>
+
+                <li>
+                    <Link to="/time-entries">Time Entries</Link>
+                </li>
             </ul>
             
             <button onClick={handleLogout}>

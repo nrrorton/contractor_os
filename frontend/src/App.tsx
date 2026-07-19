@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Clients from './pages/Clients'
 import Projects from './pages/Projects'
 import Login from './pages/Login'
+import TimeEntries from './pages/TimeEntries'
 import './App.css'
 
 
@@ -21,6 +22,7 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/clients" element={<Clients />} />
                   <Route path="/projects" element={<Projects />} />
+                  <Route path="/time-entries" element={<TimeEntries />} />
               </Route>
           </Route>
         </Routes>

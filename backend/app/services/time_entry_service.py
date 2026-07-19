@@ -125,7 +125,7 @@ def get_project_time_entries(
 ):
     
     project = (
-        db.query(Project).first(
+        db.query(Project).filter(
             Project.id == project_id,
             Project.user_id == current_user.id
         ).first()
@@ -140,7 +140,7 @@ def get_project_time_entries(
             TimeEntry.user_id == current_user.id,
             TimeEntry.archived_at.is_(None)
         ).order_by(
-            TimeEntry.word_date.desc(),
+            TimeEntry.work_date.desc(),
             TimeEntry.id.desc()
         ).all()
     )

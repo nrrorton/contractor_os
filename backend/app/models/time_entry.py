@@ -2,7 +2,7 @@ from datetime import date, datetime
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import (
-    String, ForeignKey, Date, DateTime, Numeric, Boolean, func
+    ForeignKey, Date, DateTime, Numeric, Boolean, func
 )
 
 from app.database import Base
