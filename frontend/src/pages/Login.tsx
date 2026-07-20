@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { ui } from '../styles/ui'
 
@@ -75,6 +75,19 @@ function Login() {
                     </button>
 
                 </form>
+
+                <p className="mt-6 text-sm text-slate-600">
+
+                    Don't have an account?{' '}
+
+                    <Link
+                        className="font-medium text-blue-600 hover:underline"
+                        to="/register"
+                    >
+                        Create one
+                    </Link>
+                    
+                </p>
 
             </div>
 

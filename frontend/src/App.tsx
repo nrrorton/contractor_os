@@ -7,6 +7,7 @@ import Clients from './pages/Clients'
 import Projects from './pages/Projects'
 import Login from './pages/Login'
 import TimeEntries from './pages/TimeEntries'
+import Register from './pages/Register'
 import './App.css'
 
 
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
         <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>
