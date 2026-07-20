@@ -57,8 +57,6 @@ Completed:
 - Client management
 - Project management
 - Time tracking
-
-Next:
 - Frontend
 
 ContractorOS frontend status:
@@ -68,6 +66,7 @@ ContractorOS frontend status:
 - Layout + Navbar implemented
 - Pages:
     - Login
+    - Register
     - Dashboard
     - Clients
     - Projects
@@ -79,7 +78,7 @@ ContractorOS frontend status:
 - JWT returned successfully
 - JWT stored in localStorage
 
-Later:
+Next:
 - Error handling
 - Form validation
 - Edit functionality

@@ -9,3 +9,13 @@ export interface Client {
     notes: string | null
     created_at: string
 }
+
+
+export interface ClientCreateData {
+
+    company_name: string
+    contact_name: string | null
+    contact_email: string | null
+    phone: string | null
+    notes: string | null
+}
