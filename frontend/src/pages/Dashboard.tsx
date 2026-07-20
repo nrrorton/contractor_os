@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import api from '../services/api'
 import type { DashboardData } from '../types/dashboard'
 
+import DashboardCard from '../components/DashboardCard'
+
 
 
 function Dashboard() {
@@ -23,29 +25,61 @@ function Dashboard() {
 
     return (
         <div>
-            <h1>Dashboard</h1>
+
+            <h1 className="text-3xl font-bold">
+                Dashboard
+            </h1>
 
             {dashboard && (
-                <div>
-                    <h2>Overview</h2>
 
-                    <p>
-                        Active Clients: {dashboard.active_clients}
-                    </p>
+                <div className="mt-6">
 
-                    <p>
-                        Active Projects: {dashboard.active_projects}
-                    </p>
+                    <h2 className="mb-4 text-xl font-semibold">
+                        Overview
+                    </h2>
 
-                    <h2>Time Summary</h2>
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 
-                    <p>
-                        Total Hours: {dashboard.time_summary.total_hours}
-                    </p>
+                        <DashboardCard
+                            title="Active Clients"
+                            value={dashboard.active_clients}
+                        />
 
-                    <p>
-                        Billable Amount: ${dashboard.time_summary.billable_amount}
-                    </p>
+                        <DashboardCard
+                            title="Active Projects"
+                            value={dashboard.active_projects}
+                        />
+                    
+                    </div>
+
+                    <h2 className="mb-4 mt-8 text-xl font-semibold">
+                        Time Summary
+                    </h2>
+
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+                        <DashboardCard
+                            title="Total Hours"
+                            value={dashboard.time_summary.total_hours}
+                        />
+
+                        <DashboardCard
+                            title="Billable Hours"
+                            value={dashboard.time_summary.billable_hours}
+                        />
+
+                        <DashboardCard
+                            title="Non-Billable Hours"
+                            value={dashboard.time_summary.non_billable_hours}
+                        />
+
+                        <DashboardCard
+                            title="Revenue"
+                            value={`$${dashboard.time_summary.billable_amount}`}
+                        />
+
+                    </div>
+
                 </div>
             )}
         </div>

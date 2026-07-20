@@ -14,30 +14,59 @@ function Navbar() {
     }
 
     return (
-        <nav>
-            <h2>ContractorOS</h2>
+        <nav className="bg-white border-b shadow-sm">
 
-            <ul>
-                <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                </li>
+            <div className="mx-auto flex max-w-6xl items-center justify-between p-4">
+                <h2 className="text-xl font-bold">
+                    ContractorOS
+                </h2>
 
-                <li>
-                    <Link to="/clients">Clients</Link>
-                </li>
+                <ul className="flex gap-6">
 
-                <li>
-                    <Link to="/projects">Projects</Link>
-                </li>
+                    <li>
+                        <Link 
+                            className="text-slate-600 hover:text-slate-900"
+                            to="/dashboard"
+                        >
+                            Dashboard
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            className="text-slate-600 hover:text-slate-900"
+                            to="/clients"
+                        >
+                            Clients
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            className="text-slate-600 hover:text-slate-900"
+                            to="/projects"
+                        >
+                            Projects
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            className="text-slate-600 hover:text-slate-900"
+                            to="/time-entries"
+                        >
+                            Time Entries
+                        </Link>
+                    </li>
 
-                <li>
-                    <Link to="/time-entries">Time Entries</Link>
-                </li>
-            </ul>
-            
-            <button onClick={handleLogout}>
-                Logout
-            </button>
+                </ul>
+                
+                <button 
+                    className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-900"
+                    onClick={handleLogout}
+                >
+                    Logout
+                </button>
+
+            </div>
+
         </nav>
     )
 }
