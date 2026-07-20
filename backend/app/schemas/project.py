@@ -12,6 +12,11 @@ class ProjectCreate(BaseModel):
         max_length=100
     )
 
+    hourly_rate: float | None = Field(
+        default=None,
+        ge=0
+    )
+
     description: str | None = None
 
 
@@ -20,6 +25,7 @@ class ProjectResponse(BaseModel):
     id: int
     client_id: int
     name: str
+    hourly_rate: float | None = None
     description: str | None = None
     status: str
     created_at: datetime

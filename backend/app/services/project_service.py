@@ -27,6 +27,7 @@ def create_project(
         user_id=current_user.id,
         client_id=project.client_id,
         name=project.name,
+        hourly_rate=project.hourly_rate,
         description=project.description
     )
 

@@ -77,12 +77,12 @@ ContractorOS frontend status:
 - Login endpoint working
 - JWT returned successfully
 - JWT stored in localStorage
+- Timer functionality
 
 Next:
 - Error handling
 - Form validation
 - Edit functionality
-- Timer functionality
 
 Last:
 - Improve UI styling significantly

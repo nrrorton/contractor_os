@@ -35,7 +35,11 @@ def create_time_entry(
         hours=time_entry.hours,
         description=time_entry.description,
         billable=time_entry.billable,
-        hourly_rate=time_entry.hourly_rate,
+        hourly_rate=(
+            time_entry.hourly_rate
+            if time_entry.hourly_rate is not None
+            else project.hourly_rate
+        ),
         started_at=time_entry.started_at,
         ended_at=time_entry.ended_at
     )

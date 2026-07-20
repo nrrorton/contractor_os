@@ -16,6 +16,7 @@ function Projects() {
     const [clientId, setClientId] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
+    const [hourlyRate, setHourlyRate] = useState('')
 
     async function fetchClients() {
         const response = await api.get('/clients')
@@ -40,7 +41,8 @@ function Projects() {
         await api.post('/projects', {
             client_id: Number(clientId),
             name: name,
-            description: description || null
+            description: description || null,
+            hourly_rate: hourlyRate ? Number(hourlyRate) : null
         })
 
         await fetchProjects()
@@ -48,6 +50,7 @@ function Projects() {
         setClientId('')
         setName('')
         setDescription('')
+        setHourlyRate('')
     }
 
     function getClientName(clientId: number) {
@@ -112,6 +115,21 @@ function Projects() {
                             className={ui.input}
                             value={name}
                             onChange={(event) => setName(event.target.value)}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Hourly Rate
+                        </label>
+
+                        <input
+                            className={ui.input}
+                            type="number"
+                            value={hourlyRate}
+                            onChange={(event) => setHourlyRate(event.target.value)}
                         />
 
                     </div>

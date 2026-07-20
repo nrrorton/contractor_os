@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import { TimerProvider } from './context/TimerContext'
+
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
 import Dashboard from './pages/Dashboard'
@@ -14,21 +16,23 @@ import './App.css'
 
 function App() {
   return (
-    <BrowserRouter>
-        <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+    <TimerProvider>
+      <BrowserRouter>
+          <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route element={<Layout />}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/clients" element={<Clients />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/time-entries" element={<TimeEntries />} />
-              </Route>
-          </Route>
-        </Routes>
-    </BrowserRouter>
+              <Route element={<ProtectedRoute />}>
+                <Route element={<Layout />}>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/clients" element={<Clients />} />
+                    <Route path="/projects" element={<Projects />} />
+                    <Route path="/time-entries" element={<TimeEntries />} />
+                </Route>
+            </Route>
+          </Routes>
+      </BrowserRouter>
+    </TimerProvider>
   )
 }
 

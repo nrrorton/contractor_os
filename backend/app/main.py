@@ -4,7 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
 from app.models import user, client, project, time_entry
 from app.routes import (
-    users, auth, clients, projects, time_entries, invoices, dashboard
+    users, auth, clients, projects, time_entries, invoices, 
+    dashboard, timer
 )
 
 
@@ -31,6 +32,7 @@ app.include_router(projects.router)
 app.include_router(time_entries.router)
 app.include_router(invoices.router)
 app.include_router(dashboard.router)
+app.include_router(timer.router)
 
 
 @app.get('/')

@@ -4,6 +4,7 @@ import api from '../services/api'
 import type { DashboardData } from '../types/dashboard'
 
 import DashboardCard from '../components/DashboardCard'
+import TimerCard from '../components/TimerCard'
 
 
 
@@ -33,6 +34,8 @@ function Dashboard() {
             {dashboard && (
 
                 <div className="mt-6">
+
+                    <TimerCard />
 
                     <h2 className="mb-4 text-xl font-semibold">
                         Overview
