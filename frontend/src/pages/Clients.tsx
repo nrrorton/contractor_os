@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import api from '../services/api'
+
 import type { Client } from '../types/client'
+import { ui } from '../styles/ui'
 
 
 
@@ -46,64 +48,145 @@ function Clients() {
     }
 
     return (
-        <div>
-            <h1>Clients</h1>
+        <div className={ui.page}>
 
-                <h2>Create Client</h2>
+            <h1 className={ui.pageTitle}>
+                Clients
+            </h1>
 
-                <form onSubmit={handleSubmit}>
+            <div className={ui.card}>
 
-                    <input
-                        placeholder="Company Name"
-                        value={companyName}
-                        onChange={(event) => setCompanyName(event.target.value)}
-                    />
+                <h2 className={ui.sectionTitle}>
+                    Create Client
+                </h2>
 
-                    <input
-                        placeholder="Contact Name"
-                        value={contactName}
-                        onChange={(event) => setContactName(event.target.value)}
-                    />
+                <form
+                    className={ui.form}
+                    onSubmit={handleSubmit}
+                >
 
-                    <input
-                        placeholder="Email"
-                        value={contactEmail}
-                        onChange={(event) => setContactEmail(event.target.value)}
-                    />
+                    <div>
 
-                    <input
-                        placeholder="Phone"
-                        value={phone}
-                        onChange={(event) => setPhone(event.target.value)}
-                    />
+                        <label className={ui.label}>
+                            Company Name
+                        </label>
 
-                    <textarea
-                        placeholder="Notes"
-                        value={notes}
-                        onChange={(event) => setNotes(event.target.value)}
-                    />
+                        <input
+                            className={ui.input}
+                            value={companyName}
+                            onChange={(event) => setCompanyName(event.target.value)}
+                        />
 
-                    <button type="submit">
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Contact Name
+                        </label>
+
+                        <input
+                            className={ui.input}
+                            value={contactName}
+                            onChange={(event) => setContactName(event.target.value)}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Email
+                        </label>
+
+                        <input
+                            className={ui.input}
+                            type="email"
+                            value={contactEmail}
+                            onChange={(event) => setContactEmail(event.target.value)}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Phone
+                        </label>
+
+                        <input
+                            className={ui.input}
+                            value={phone}
+                            onChange={(event) => setPhone(event.target.value)}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Notes
+                        </label>
+
+                        <textarea
+                            className={ui.textarea}
+                            rows={4}
+                            value={notes}
+                            onChange={(event) => setNotes(event.target.value)}
+                        />
+
+                    </div>
+
+                    <button
+                        className={ui.button}
+                        type="submit"
+                    >
                         Create Client
                     </button>
 
                 </form>
 
-                    {clients.map((client) => (
-                        <div key={client.id}>
-                            <h2>
-                                {client.company_name}
-                            </h2>
+            </div>
 
-                            <p>
+            <div className={ui.sectionSpacing}>
+
+                <h2 className={ui.sectionTitle}>
+                    Existing Clients
+                </h2>
+
+                <div className={ui.stack}>
+
+                    {clients.map((client) => (
+
+                        <div 
+                            key={client.id}
+                            className={ui.listItem}
+                        >
+
+                            <h3 className={ui.cardTitle}>
+                                {client.company_name}
+                            </h3>
+
+                            <p className={ui.mutedText}>
                                 Contact: {client.contact_name ?? 'N/A'}
                             </p>
 
-                            <p>
+                            <p className={ui.mutedText}>
                                 Email: {client.contact_email ?? 'N/A'}
                             </p>
+
+                            <p className={ui.mutedText}>
+                                Phone: {client.phone ?? 'N/A'}
+                            </p>
+
                         </div>
+
                     ))}
+
+                </div>
+
+            </div>
+
         </div>
     )
 }

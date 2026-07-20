@@ -4,6 +4,8 @@ import api from '../services/api'
 import type { Client } from '../types/client'
 import type { Project } from '../types/project'
 
+import { ui } from '../styles/ui'
+
 
 
 function Projects() {
@@ -48,62 +50,137 @@ function Projects() {
         setDescription('')
     }
 
+    function getClientName(clientId: number) {
+
+        const client = clients.find((client) => client.id === clientId)
+
+        return client?.company_name ?? 'Unknown Client'
+    }
+
     return (
-        <div>
-            <h1>Projects</h1>
+        <div className={ui.page}>
 
-            <h2>Create Project</h2>
+            <h1 className={ui.pageTitle}>
+                Projects
+            </h1>
 
-            <form onSubmit={handleSubmit}>
+            <div className={ui.card}>
 
-                <select
-                    value={clientId}
-                    onChange={(event) => setClientId(event.target.value)}
-                >
-                    <option value="">
-                        Select a Client
-                    </option>
-
-                    {clients.map((client) => (
-                        <option
-                            key={client.id}
-                            value={client.id}
-                        >
-                            {client.company_name}
-                        </option>
-                    ))}
-                </select>
-
-                <input
-                    placeholder="Project Name"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                />
-
-                <textarea
-                    placeholder="Description"
-                    value={description}
-                    onChange={(event) => setDescription(event.target.value)}
-                />
-
-                <button type="submit">
+                <h2 className={ui.sectionTitle}>
                     Create Project
-                </button>
-            </form>
+                </h2>
 
-            {projects.map((project) => (
-                <div key={project.id}>
-                    <h2>{project.name}</h2>
+                <form 
+                    className={ui.form}
+                    onSubmit={handleSubmit}
+                >
 
-                    <p>
-                        Status: {project.status}
-                    </p>
+                    <div>
 
-                    <p>
-                        Description: {project.description ?? 'No description'}
-                    </p>
+                        <label className={ui.label}>
+                            Client
+                        </label>
+
+                        <select
+                            className={ui.select}
+                            value={clientId}
+                            onChange={(event) => setClientId(event.target.value)}
+                        >
+                            <option value="">
+                                Select a Client
+                            </option>
+
+                            {clients.map((client) => (
+                                <option
+                                    key={client.id}
+                                    value={client.id}
+                                >
+                                    {client.company_name}
+                                </option>
+                            ))}
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Project Name
+                        </label>
+
+                        <input
+                            className={ui.input}
+                            value={name}
+                            onChange={(event) => setName(event.target.value)}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Description
+                        </label>
+
+                        <textarea
+                            className={ui.textarea}
+                            rows={4}
+                            value={description}
+                            onChange={(event) => setDescription(event.target.value)}
+                        />
+
+                    </div>
+
+                    <button 
+                        className={ui.button}
+                        type="submit"
+                    >
+                        Create Project
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div className={ui.sectionSpacing}>
+
+                <h2 className={ui.sectionTitle}>
+                    Existing Projects
+                </h2>
+
+                <div className={ui.stack}>
+
+                    {projects.map((project) => (
+
+                        <div 
+                            key={project.id}
+                            className={ui.listItem}
+                        >
+
+                            <h3 className={ui.cardTitle}>
+                                {project.name}
+                            </h3>
+
+                            <p className={ui.mutedText}>
+                                Client: {getClientName(project.client_id)}
+                            </p>
+
+                            <p className={ui.mutedText}>
+                                Status: {project.status}
+                            </p>
+
+                            <p className={ui.mutedText}>
+                                Description: {project.description ?? 'No description'}
+                            </p>
+
+                        </div>
+
+                    ))}
+
                 </div>
-            ))}
+
+            </div>
+
         </div>
     )
 }

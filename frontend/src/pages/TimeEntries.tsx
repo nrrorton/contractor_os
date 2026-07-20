@@ -6,6 +6,8 @@ import type { Client } from '../types/client'
 import type { Project } from '../types/project'
 import type { TimeEntry } from '../types/time_entry'
 
+import { ui } from '../styles/ui'
+
 
 
 function TimeEntries() {
@@ -84,126 +86,217 @@ function TimeEntries() {
     }
 
     return (
-        <div>
-            <h1>Time Entries</h1>
+        <div className={ui.page}>
 
-            <h2>Create Time Entry</h2>
+            <h1 className={ui.pageTitle}>
+                Time Entries
+            </h1>
 
-            <form onSubmit={handleSubmit}>
+            <div className={ui.card}>
 
-                <select
-                    value={selectedClientId}
-                    onChange={(event) => {
-                        setSelectedClientId(event.target.value)
-                        setProjectId('')
-                    }}
-                >
-                    <option value="">
-                        Select Client
-                    </option>
-
-                    {clients.map((client) => (
-                        <option
-                            key={client.id}
-                            value={client.id}
-                        >
-                            {client.company_name}
-                        </option>
-                    ))}
-
-                </select>
-
-                <select
-                    value={projectId}
-                    onChange={(event) => setProjectId(event.target.value)}
-                    disabled={!selectedClientId}
-                >
-                    <option value="">
-                        Select Project
-                    </option>
-
-                    {availableProjects.map((project) => (
-                        <option
-                            key={project.id}
-                            value={project.id}
-                        >
-                            {project.name}
-                        </option>
-                    ))}
-
-                </select>
-
-                <input
-                    type="date"
-                    value={workDate}
-                    onChange={(event) => setWorkDate(event.target.value)}
-                />
-
-                <input
-                    type="number"
-                    placeholder="Hours"
-                    value={hours}
-                    onChange={(event) => setHours(event.target.value)}
-                />
-
-                <textarea
-                    placeholder="Description"
-                    value={description}
-                    onChange={(event) => setDescription(event.target.value)}
-                />
-
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={billable}
-                        onChange={(event) => setBillable(event.target.checked)}
-                    />
-
-                    Billable
-                </label>
-
-                <input
-                    type="number"
-                    placeholder="Hourly Rate"
-                    value={hourlyRate}
-                    onChange={(event) => setHourlyRate(event.target.value)}
-                />
-
-                <button type="submit">
+                <h2 className={ui.sectionTitle}>
                     Create Time Entry
-                </button>
+                </h2>
 
-            </form>
+                <form 
+                    className={ui.form}
+                    onSubmit={handleSubmit}
+                >
 
-            <h2>Time Entries</h2>
+                    <div>
 
-            {timeEntries.map((entry) => (
-                <div key={entry.id}>
+                        <label className={ui.label}>
+                            Client
+                        </label>
 
-                    <p>
-                        Date: {entry.work_date}
-                    </p>
+                        <select
+                            className={ui.select}
+                            value={selectedClientId}
+                            onChange={(event) => {
+                                setSelectedClientId(event.target.value)
+                                setProjectId('')
+                            }}
+                        >
+                            <option value="">
+                                Select Client
+                            </option>
 
-                    <p>
-                        Project: {getProjectName(entry.project_id)}
-                    </p>
+                            {clients.map((client) => (
+                                <option
+                                    key={client.id}
+                                    value={client.id}
+                                >
+                                    {client.company_name}
+                                </option>
+                            ))}
 
-                    <p>
-                        Hours: {entry.hours}
-                    </p>
+                        </select>
 
-                    <p>
-                        Description: {entry.description ?? 'No description'}
-                    </p>
+                    </div>
 
-                    <p>
-                        Billable: {entry.billable ? 'Yes' : 'No'}
-                    </p>
+                    <div>
 
-                    <hr />
+                        <label className={ui.label}>
+                            Project
+                        </label>
+
+                        <select
+                            className={ui.select}
+                            value={projectId}
+                            onChange={(event) => setProjectId(event.target.value)}
+                            disabled={!selectedClientId}
+                        >
+                            <option value="">
+                                Select Project
+                            </option>
+
+                            {availableProjects.map((project) => (
+                                <option
+                                    key={project.id}
+                                    value={project.id}
+                                >
+                                    {project.name}
+                                </option>
+                            ))}
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Work Date
+                        </label>
+
+                        <input
+                            className={ui.input}
+                            type="date"
+                            value={workDate}
+                            onChange={(event) => setWorkDate(event.target.value)}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Hours
+                        </label>
+
+                        <input
+                            className={ui.input}
+                            type="number"
+                            step="0.25"
+                            value={hours}
+                            onChange={(event) => setHours(event.target.value)}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Description
+                        </label>
+
+                        <textarea
+                            className={ui.textarea}
+                            rows={4}
+                            value={description}
+                            onChange={(event) => setDescription(event.target.value)}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Hourly Rate
+                        </label>
+                    
+                        <input
+                            className={ui.input}
+                            type="number"
+                            step="0.01"
+                            value={hourlyRate}
+                            onChange={(event) => setHourlyRate(event.target.value)}
+                        />
+
+                    </div>
+
+                    <label className="flex items-center gap-3">
+
+                        <input
+                            className={ui.checkbox}
+                            type="checkbox"
+                            checked={billable}
+                            onChange={(event) => setBillable(event.target.checked)}
+                        />
+
+                        <span className={ui.label}>
+                            Billable
+                        </span>
+
+                    </label>
+
+                    <button 
+                        className={ui.button}
+                        type="submit"
+                    >
+                        Create Time Entry
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div className={ui.sectionSpacing}>
+
+                <h2 className={ui.sectionTitle}>
+                    Time Entries
+                </h2>
+
+                <div className={ui.stack}>
+
+                    {timeEntries.map((entry) => (
+
+                        <div 
+                            key={entry.id}
+                            className={ui.listItem}
+                        >
+
+                            <h3 className={ui.cardTitle}>
+                                {getProjectName(entry.project_id)}
+                            </h3>
+
+                            <p className={ui.mutedText}>
+                                Date: {entry.work_date}
+                            </p>
+
+                            <p className={ui.mutedText}>
+                                Hours: {entry.hours}
+                            </p>
+
+                            <p className={ui.mutedText}>
+                                Billable: {entry.billable ? 'Yes': 'No'}
+                            </p>
+
+                            <p className={ui.mutedText}>
+                                Rate: {entry.hourly_rate ? `$${entry.hourly_rate}/hr` : 'N/A'}
+                            </p>
+
+                            <p className={ui.mutedText}>
+                                Description: {entry.description ?? 'N/A'}
+                            </p>
+
+                        </div>
+
+                    ))}
 
                 </div>
-            ))}
+
+            </div>
 
         </div>
     )

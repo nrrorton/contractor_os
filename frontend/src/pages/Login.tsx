@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { ui } from '../styles/ui'
+
 import useAuth from '../hooks/useAuth'
 
 
@@ -23,32 +25,59 @@ function Login() {
     }
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div className={ui.page}>
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                    />
-                </div>
+            <div className="mx-auto mt-20 max-w-md">
 
-                <div>
-                    <label>Password</label>
-                    <input 
-                        type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)} 
-                    />
-                </div>
-
-                <button type="submit">
+                <h1 className={ui.pageTitle}>
                     Login
-                </button>
-            </form>
+                </h1>
+
+                <form
+                    className={ui.form}
+                    onSubmit={handleSubmit}
+                >
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Email
+                        </label>
+
+                        <input
+                            className={ui.input}
+                            type="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                        />
+                    </div>
+
+                    <div>
+
+                        <label className={ui.label}>
+                            Password
+                        </label>
+
+                        <input 
+                            className={ui.input}
+                            type="password"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)} 
+                        />
+
+                    </div>
+
+                    <button
+                        className={ui.button}
+                        type="submit"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+            </div>
+
         </div>
     )
 }
