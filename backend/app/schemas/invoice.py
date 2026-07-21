@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
+from decimal import Decimal
 
 
 
@@ -7,8 +8,8 @@ class InvoiceProjectSummary(BaseModel):
 
     project_id: int
     project_name: str
-    hours: float
-    amount: float
+    hours: Decimal
+    amount: Decimal
 
 
 class InvoicePreview(BaseModel):
@@ -18,5 +19,5 @@ class InvoicePreview(BaseModel):
     start_date: date
     end_date: date
     projects: list[InvoiceProjectSummary]
-    total_hours: float
-    total_amount: float
+    total_hours: Decimal
+    total_amount: Decimal

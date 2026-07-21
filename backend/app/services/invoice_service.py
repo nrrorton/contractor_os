@@ -16,7 +16,8 @@ def generate_invoice_preview(
         current_user: User,
         client_id: int,
         start_date: date,
-        end_date: date
+        end_date: date,
+        project_id: int | None = None
 ):
     
     client = (
@@ -30,7 +31,7 @@ def generate_invoice_preview(
             detail='Client not found'
         )
     
-    entries = (
+    query = (
         db.query(TimeEntry).join(Project).filter(
             Project.client_id == client_id,
             TimeEntry.user_id == current_user.id,
@@ -38,12 +39,23 @@ def generate_invoice_preview(
             TimeEntry.archived_at.is_(None),
             TimeEntry.work_date >= start_date,
             TimeEntry.work_date <= end_date
-        ).all()
+        )
     )
+
+    if project_id is not None:
+        query = query.filter(Project.id == project_id)
+
+    entries = query.all()
 
     project_totals = {}
 
     for entry in entries:
+
+        if entry.hourly_rate is None:
+            raise HTTPException(
+                status_code=400,
+                detail=f'Time entry {entry.id} is missing an hourly rate'
+            )
 
         project_id = entry.project.id
 

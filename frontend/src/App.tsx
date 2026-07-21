@@ -10,6 +10,7 @@ import Projects from './pages/Projects'
 import Login from './pages/Login'
 import TimeEntries from './pages/TimeEntries'
 import Register from './pages/Register'
+import Invoices from './pages/Invoices'
 import './App.css'
 
 
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/clients" element={<Clients />} />
                     <Route path="/projects" element={<Projects />} />
                     <Route path="/time-entries" element={<TimeEntries />} />
+                    <Route path="/invoices" element={<Invoices />} />
                 </Route>
             </Route>
           </Routes>

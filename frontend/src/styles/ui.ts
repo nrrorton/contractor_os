@@ -19,7 +19,7 @@ export const ui = {
 
     label: "mb-1 block text-sm font-medium text-slate-700",
 
-    button: "rounded-md bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700",
+    button: "rounded-md bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400",
 
     secondaryButton: "rounded-md border border-slate-300 px-4 py-2 hover:bg-slate-100",
 
@@ -33,5 +33,19 @@ export const ui = {
 
     cardTitle: "text-lg font-semibold text-slate-900",
 
-    mutedText: "text-sm text-slate-600"
+    mutedText: "text-sm text-slate-600",
+
+    table: "w-full border-collapse",
+
+    tableHeader: "border-b",
+
+    tableHeading: "py-2 text-left font-semibold",
+
+    tableHeadingRight: "py-2 text-right font-semibold",
+
+    tableCell: "py-2",
+
+    tableCellRight: "py-2 text-right",
+
+    tableRow: "border-b"
 }

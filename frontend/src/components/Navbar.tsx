@@ -55,6 +55,14 @@ function Navbar() {
                             Time Entries
                         </Link>
                     </li>
+                    <li>
+                        <Link
+                            className="text-slate-600 hover:text-slate-900"
+                            to="/invoices"
+                        >
+                            Invoices
+                        </Link>
+                    </li>
 
                 </ul>
                 

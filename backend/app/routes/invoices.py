@@ -13,15 +13,16 @@ from app.services.invoice_service import generate_invoice_preview
 router = APIRouter()
 
 
-@router.post('/invoices/preview', response_model=InvoicePreview)
+@router.get('/invoices/preview', response_model=InvoicePreview)
 def invoice_preview(
     client_id: int,
     start_date: date,
     end_date: date,
+    project_id: int | None = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     
     return generate_invoice_preview(
-        db, current_user, client_id, start_date, end_date
+        db, current_user, client_id, start_date, end_date, project_id
     )
