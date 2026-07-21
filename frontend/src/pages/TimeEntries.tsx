@@ -20,9 +20,18 @@ function TimeEntries() {
 
     const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([])
     const [editingEntry, setEditingEntry] = useState<TimeEntry | null>(null)
+    const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({})
 
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+
+
+    function toggleGroup(group: string) {
+        setExpandedGroups((previous) => ({
+            ...previous,
+            [group]: !previous[group]
+        }))
+    }
 
 
     async function fetchClients() {
@@ -109,6 +118,24 @@ function TimeEntries() {
         setEditingEntry(entry)
     }
 
+    const groupedEntries = timeEntries.reduce<Record<string, TimeEntry[]>>(
+        (groups, entry) => {
+
+            const month = new Date(entry.work_date).toLocaleString('en-US', {
+                month: 'long',
+                year: 'numeric'
+            })
+
+            if (!groups[month]) {
+                groups[month] = []
+            }
+
+            groups[month].push(entry)
+
+            return groups
+        }, {}
+    )
+
 
     return (
 
@@ -156,15 +183,47 @@ function TimeEntries() {
                         </p>
                     )}
 
-                    {!loading && timeEntries.map((entry) => (
+                    {!loading && Object.entries(groupedEntries).map(([month, entries]) => (
 
-                        <TimeEntryCard
-                            key={entry.id}
-                            entry={entry}
-                            projectName={getProjectName(entry.project_id)}
-                            onEdit={handleEditEntry}
-                            onArchive={handleArchiveEntry}
-                        />
+                        <div key={month} className="mb-6">
+
+                            <button
+                                className={ui.collapsibleHeader}
+                                onClick={() => toggleGroup(month)}
+                            >
+
+                                <span>
+                                    {month} ({entries.length} entries)
+                                </span>
+
+                                <span>
+                                    {expandedGroups[month] ? '▼' : '▶'}
+                                </span>
+
+                            </button>
+
+                            {expandedGroups[month] && (
+
+                                <div className={ui.buttonGroup}>
+
+                                    {entries.map((entry) => (
+
+                                        <TimeEntryCard
+                                            key={entry.id}
+                                            entry={entry}
+                                            projectName={getProjectName(entry.project_id)}
+                                            onEdit={handleEditEntry}
+                                            onArchive={handleArchiveEntry}
+                                        />
+
+                                    ))}
+
+                                </div>
+
+                            )}
+
+                        </div>
+                        
                     ))}
 
                 </div>

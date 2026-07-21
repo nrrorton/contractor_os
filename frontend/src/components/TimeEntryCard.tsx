@@ -2,6 +2,8 @@ import { ui } from '../styles/ui'
 
 import type { TimeEntry } from '../types/time_entry'
 
+import { currencyFormatter, formatHours, dateFormatter } from '../utils/formatters'
+
 
 
 interface TimeEntryCardProps {
@@ -24,28 +26,32 @@ function TimeEntryCard({entry, projectName, onEdit, onArchive}: TimeEntryCardPro
             </h3>
 
             <p className={ui.mutedText}>
-                Date: {entry.work_date}
+                {dateFormatter.format(new Date(entry.work_date))}
             </p>
 
             <p className={ui.mutedText}>
-                Hours: {entry.hours}
+                {formatHours(entry.hours)}
             </p>
 
             <p className={ui.mutedText}>
-                Billable: {entry.billable ? 'Yes' : 'No'}
+                {entry.billable ? 'Billable' : 'Non-billable'}
             </p>
 
             <p className={ui.mutedText}>
                 Rate: {
                     entry.hourly_rate
-                        ? `$${entry.hourly_rate}/hr`
-                        : 'N/A'
+                        ? `${currencyFormatter.format(entry.hourly_rate)}/hr`
+                        : 'No hourly rate'
                 }
             </p>
 
-            <p className={ui.mutedText}>
-                Description: {entry.description ?? 'N/A'}
-            </p>
+            {entry.description && (
+
+                <p className={ui.mutedText}>
+                    {entry.description}
+                </p>
+            )}
+            
 
             <div className={ui.buttonGroup}>
 

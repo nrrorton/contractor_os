@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import api from '../services/api'
 import type { DashboardData } from '../types/dashboard'
 
+import { currencyFormatter } from '../utils/formatters'
+
 import DashboardCard from '../components/DashboardCard'
 import TimerCard from '../components/TimerCard'
 
@@ -78,7 +80,9 @@ function Dashboard() {
 
                         <DashboardCard
                             title="Revenue"
-                            value={`$${dashboard.time_summary.billable_amount}`}
+                            value={currencyFormatter.format(
+                                dashboard.time_summary.billable_amount
+                            )}
                         />
 
                     </div>

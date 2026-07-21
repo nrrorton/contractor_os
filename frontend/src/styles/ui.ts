@@ -31,6 +31,8 @@ export const ui = {
 
     form: "space-y-4",
 
+    collapsibleHeader: "flex w-full items-center justify-between rounded bg-gray-100 px-4 py-2 text-left font-semibold",
+
     sectionSpacing: "mt-10",
 
     cardTitle: "text-lg font-semibold text-slate-900",
