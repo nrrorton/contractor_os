@@ -6,10 +6,12 @@ import { ui } from '../styles/ui'
 interface ClientCardProps {
 
     client: Client
+    onEdit: (client: Client) => void
+    onArchive: (clientId: number) => void
 }
 
 
-function ClientCard({ client }: ClientCardProps) {
+function ClientCard({ client, onEdit, onArchive }: ClientCardProps) {
 
     return (
         <div className={ui.listItem}>
@@ -29,6 +31,32 @@ function ClientCard({ client }: ClientCardProps) {
             <p className={ui.mutedText}>
                 Phone: {client.phone ?? 'N/A'}
             </p>
+
+            <div className="mt-4 flex gap-2">
+
+                <button
+                    className={ui.secondaryButton}
+                    onClick={() => onEdit(client)}
+                >
+                    Edit
+                </button>
+
+                <button
+                    className={ui.secondaryButton}
+                    onClick={() => {
+                        const confirmed = window.confirm(
+                            `Archive ${client.company_name}?`
+                        )
+
+                        if (confirmed) {
+                            onArchive(client.id)
+                        }
+                    }}
+                >
+                    Archive
+                </button>
+
+            </div>
 
         </div>
     )

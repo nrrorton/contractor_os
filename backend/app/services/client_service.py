@@ -35,7 +35,10 @@ def get_clients(
 ):
     
     return (
-        db.query(Client).filter(Client.user_id == current_user.id).all()
+        db.query(Client).filter(
+            Client.user_id == current_user.id,
+            Client.archived_at.is_(None)
+        ).all()
     )
 
 
@@ -46,7 +49,11 @@ def get_client(
 ):
     
     return (
-        db.query(Client).filter(Client.id == client_id, Client.user_id == current_user.id).first()
+        db.query(Client).filter(
+            Client.id == client_id,
+            Client.user_id == current_user.id,
+            Client.archived_at.is_(None)
+        ).first()
     )
 
 

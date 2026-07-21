@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
+import type { Client } from '../types/client'
 import { ui } from '../styles/ui'
 
 
 
 interface ClientFormProps {
+
+    client: Client | null
 
     onSubmit: (clientData: {
         company_name: string
@@ -14,17 +17,37 @@ interface ClientFormProps {
         notes: string | null
     }) => Promise<void>
 
+    onCancel: () => void
+
     submitting: boolean
 }
 
 
-function ClientForm({onSubmit, submitting}: ClientFormProps) {
+function ClientForm({client, onSubmit, onCancel, submitting}: ClientFormProps) {
 
     const [companyName, setCompanyName] = useState('')
     const [contactName, setContactName] = useState('')
     const [contactEmail, setContactEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [notes, setNotes] = useState('')
+
+    useEffect(() => {
+
+        if (client) {
+            setCompanyName(client.company_name)
+            setContactName(client.contact_name ?? '')
+            setContactEmail(client.contact_email ?? '')
+            setPhone(client.phone ?? '')
+            setNotes(client.notes ?? '')
+
+        } else {
+            setCompanyName('')
+            setContactName('')
+            setContactEmail('')
+            setPhone('')
+            setNotes('')
+        }
+    }, [client])
 
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault()
@@ -36,19 +59,13 @@ function ClientForm({onSubmit, submitting}: ClientFormProps) {
             phone: phone || null,
             notes: notes || null
         })
-
-        setCompanyName('')
-        setContactName('')
-        setContactEmail('')
-        setPhone('')
-        setNotes('')
     }
 
     return (
         <div className={ui.card}>
 
             <h2 className={ui.sectionTitle}>
-                Create Client
+                {client ? 'Edit Client' : 'Create Client'}
             </h2>
 
             <form
@@ -128,13 +145,34 @@ function ClientForm({onSubmit, submitting}: ClientFormProps) {
 
                 </div>
 
-                <button
-                    className={ui.button}
-                    type="submit"
-                    disabled={submitting}
-                >
-                    {submitting ? 'Creating...' : 'Create Client'}
-                </button>
+                <div className="flex gap-2">
+
+                    <button
+                        className={ui.button}
+                        type="submit"
+                        disabled={submitting}
+                    >
+                        {submitting
+                            ? client
+                                ? 'Saving...' : 'Creating...'
+                            : client
+                                ? 'Save Changes' : 'Create Client'
+                        }
+
+                    </button>
+
+                    {client && (
+
+                        <button
+                            type="button"
+                            className={ui.secondaryButton}
+                            onClick={onCancel}
+                        >
+                            Cancel
+                        </button>
+                    )}
+
+                </div>
 
             </form>
 

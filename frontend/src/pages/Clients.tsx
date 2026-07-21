@@ -15,6 +15,7 @@ function Clients() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [submitting, setSubmitting] = useState(false)
+    const [editingClient, setEditingClient] = useState<Client | null>(null)
 
     async function fetchClients() {
         
@@ -56,6 +57,49 @@ function Clients() {
         }
     }
 
+    function handleEditClient(client: Client) {
+        setEditingClient(client)
+    }
+
+    function handleCancelEdit() {
+        setEditingClient(null)
+    }
+
+    async function handleUpdateClient(clientData: ClientCreateData) {
+        
+        if (!editingClient) {
+            return
+        }
+
+        try {
+            setSubmitting(true)
+            setError('')
+
+            await api.put(`/clients/${editingClient.id}`, clientData)
+
+            await fetchClients()
+
+            setEditingClient(null)
+
+        } catch {
+            setError('Failed to update client.')
+
+        } finally {
+            setSubmitting(false)
+        }
+    }
+
+    async function handleArchiveClient(clientId: number) {
+
+        try {
+            await api.patch(`/clients/${clientId}/archive`)
+            await fetchClients()
+
+        } catch {
+            setError("Failed to archive client.")
+        }
+    }
+
     return (
         <div className={ui.page}>
 
@@ -70,8 +114,10 @@ function Clients() {
             )}
 
             <ClientForm
+                client={editingClient}
                 submitting={submitting}
-                onSubmit={handleCreateClient}
+                onSubmit={editingClient ? handleUpdateClient : handleCreateClient}
+                onCancel={handleCancelEdit}
             />
 
             <div className={ui.sectionSpacing}>
@@ -99,6 +145,8 @@ function Clients() {
                         <ClientCard
                             key={client.id}
                             client={client}
+                            onEdit={handleEditClient}
+                            onArchive={handleArchiveClient}
                         />
 
                     ))}
