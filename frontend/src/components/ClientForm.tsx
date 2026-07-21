@@ -145,7 +145,7 @@ function ClientForm({client, onSubmit, onCancel, submitting}: ClientFormProps) {
 
                 </div>
 
-                <div className="flex gap-2">
+                <div className={ui.buttonGroup}>
 
                     <button
                         className={ui.button}

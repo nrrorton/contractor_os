@@ -44,7 +44,10 @@ def get_projects(
 ):
     
     return (
-        db.query(Project).filter(Project.user_id == current_user.id).all()
+        db.query(Project).filter(
+            Project.user_id == current_user.id,
+            Project.archived_at.is_(None))
+            .all()
     )
 
 
@@ -65,7 +68,9 @@ def get_client_projects(
     
     return (
         db.query(Project).filter(
-            Project.client_id == client_id, Project.user_id == current_user.id)
+            Project.client_id == client_id,
+            Project.user_id == current_user.id,
+            Project.archived_at.is_(None))
             .all()
         )
     

@@ -42,6 +42,11 @@ class ProjectUpdate(BaseModel):
 
     description: str | None = None
 
+    hourly_rate: float | None = Field(
+        default=None,
+        ge=0
+    )
+
     status: str | None = Field(
         default=None,
         max_length=50

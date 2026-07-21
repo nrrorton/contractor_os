@@ -21,6 +21,8 @@ export const ui = {
 
     button: "rounded-md bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400",
 
+    buttonGroup: "mt-4 flex gap-2",
+
     secondaryButton: "rounded-md border border-slate-300 px-4 py-2 hover:bg-slate-100",
 
     listItem: "rounded-lg border bg-white p-4 shadow-sm",

@@ -78,11 +78,10 @@ ContractorOS frontend status:
 - JWT returned successfully
 - JWT stored in localStorage
 - Timer functionality
-
-Next:
 - Error handling
 - Form validation
 - Edit functionality
 
-Last:
-- Improve UI styling significantly
+Next:
+- Enable invoice PDF creation
+- Improve UI styling 

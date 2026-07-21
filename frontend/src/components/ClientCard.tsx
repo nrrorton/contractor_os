@@ -32,7 +32,7 @@ function ClientCard({ client, onEdit, onArchive }: ClientCardProps) {
                 Phone: {client.phone ?? 'N/A'}
             </p>
 
-            <div className="mt-4 flex gap-2">
+            <div className={ui.buttonGroup}>
 
                 <button
                     className={ui.secondaryButton}

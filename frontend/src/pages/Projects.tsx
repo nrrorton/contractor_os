@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
 
 import api from '../services/api'
+
+import ProjectForm from '../components/ProjectForm'
+import ProjectCard from '../components/ProjectCard'
+
 import type { Client } from '../types/client'
 import type { Project } from '../types/project'
 
@@ -13,21 +17,33 @@ function Projects() {
     const [clients, setClients] = useState<Client[]>([])
     const [projects, setProjects] = useState<Project[]>([])
 
-    const [clientId, setClientId] = useState('')
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [hourlyRate, setHourlyRate] = useState('')
+    const [editingProject, setEditingProject] = useState<Project | null>(null)
 
     async function fetchClients() {
-        const response = await api.get('/clients')
 
-        setClients(response.data)
+        try {
+            const response = await api.get('/clients')
+
+            setClients(response.data)
+
+        } catch (error) {
+            console.error("Failed to fetch clients:", error)
+        }
+
     }
 
     async function fetchProjects() {
-        const response = await api.get('/projects')
 
-        setProjects(response.data)
+        try {
+            const response = await api.get('/projects')
+
+            setProjects(response.data)
+
+        } catch (error) {
+            console.error("Failed to fetch projects:", error)
+
+        }
+
     }
 
     useEffect(() => {
@@ -35,23 +51,6 @@ function Projects() {
         fetchProjects()
     }, [])
 
-    async function handleSubmit(event: React.FormEvent) {
-        event.preventDefault()
-
-        await api.post('/projects', {
-            client_id: Number(clientId),
-            name: name,
-            description: description || null,
-            hourly_rate: hourlyRate ? Number(hourlyRate) : null
-        })
-
-        await fetchProjects()
-
-        setClientId('')
-        setName('')
-        setDescription('')
-        setHourlyRate('')
-    }
 
     function getClientName(clientId: number) {
 
@@ -67,98 +66,14 @@ function Projects() {
                 Projects
             </h1>
 
-            <div className={ui.card}>
-
-                <h2 className={ui.sectionTitle}>
-                    Create Project
-                </h2>
-
-                <form 
-                    className={ui.form}
-                    onSubmit={handleSubmit}
-                >
-
-                    <div>
-
-                        <label className={ui.label}>
-                            Client
-                        </label>
-
-                        <select
-                            className={ui.select}
-                            value={clientId}
-                            onChange={(event) => setClientId(event.target.value)}
-                        >
-                            <option value="">
-                                Select a Client
-                            </option>
-
-                            {clients.map((client) => (
-                                <option
-                                    key={client.id}
-                                    value={client.id}
-                                >
-                                    {client.company_name}
-                                </option>
-                            ))}
-                        </select>
-
-                    </div>
-
-                    <div>
-
-                        <label className={ui.label}>
-                            Project Name
-                        </label>
-
-                        <input
-                            className={ui.input}
-                            value={name}
-                            onChange={(event) => setName(event.target.value)}
-                        />
-
-                    </div>
-
-                    <div>
-
-                        <label className={ui.label}>
-                            Hourly Rate
-                        </label>
-
-                        <input
-                            className={ui.input}
-                            type="number"
-                            value={hourlyRate}
-                            onChange={(event) => setHourlyRate(event.target.value)}
-                        />
-
-                    </div>
-
-                    <div>
-
-                        <label className={ui.label}>
-                            Description
-                        </label>
-
-                        <textarea
-                            className={ui.textarea}
-                            rows={4}
-                            value={description}
-                            onChange={(event) => setDescription(event.target.value)}
-                        />
-
-                    </div>
-
-                    <button 
-                        className={ui.button}
-                        type="submit"
-                    >
-                        Create Project
-                    </button>
-
-                </form>
-
-            </div>
+                <ProjectForm
+                    clients={clients}
+                    project={editingProject}
+                    onSuccess={() => {
+                        fetchProjects()
+                        setEditingProject(null)}}
+                    onCancel={() => setEditingProject(null)}
+                />
 
             <div className={ui.sectionSpacing}>
 
@@ -170,28 +85,13 @@ function Projects() {
 
                     {projects.map((project) => (
 
-                        <div 
+                        <ProjectCard
                             key={project.id}
-                            className={ui.listItem}
-                        >
-
-                            <h3 className={ui.cardTitle}>
-                                {project.name}
-                            </h3>
-
-                            <p className={ui.mutedText}>
-                                Client: {getClientName(project.client_id)}
-                            </p>
-
-                            <p className={ui.mutedText}>
-                                Status: {project.status}
-                            </p>
-
-                            <p className={ui.mutedText}>
-                                Description: {project.description ?? 'No description'}
-                            </p>
-
-                        </div>
+                            project={project}
+                            clientName={getClientName(project.client_id)}
+                            onEdit={setEditingProject}
+                            onArchived={fetchProjects}
+                        />
 
                     ))}
 
