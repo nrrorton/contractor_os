@@ -8,3 +8,30 @@ body {
   color: #1e293b;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
+
+@media print {
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .no-print {
+    display: none;
+  }
+
+  @page {
+    margin: 1in;
+  }
+}

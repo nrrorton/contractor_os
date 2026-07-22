@@ -1,9 +1,12 @@
 
-export interface InvoiceProjectSummary {
+export interface InvoiceLineItem {
 
-    project_id: number
+    id: number
+    work_date: string
     project_name: string
+    description: string | null
     hours: number
+    hourly_rate: number
     amount: number
 }
 
@@ -13,7 +16,7 @@ export interface InvoicePreview {
     client_name: string
     start_date: string
     end_date: string
-    projects: InvoiceProjectSummary[]
+    line_items: InvoiceLineItem[]
     total_hours: number
     total_amount: number
 }

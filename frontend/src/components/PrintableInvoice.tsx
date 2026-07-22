@@ -1,32 +1,47 @@
 import type { InvoicePreview as InvoicePreviewType } from '../types/invoice'
+
 import { ui } from '../styles/ui'
 
 
 
-interface Props {
+interface PrintableInvoiceProps {
+
     invoice: InvoicePreviewType
 }
 
 
-function InvoicePreview({invoice}: Props) {
+function PrintableInvoice({invoice}: PrintableInvoiceProps) {
 
     return (
 
-        <div className={`${ui.card} ${ui.sectionSpacing}`}>
+        <div className={`print-area ${ui.card}`}>
 
-            <h2 className={ui.sectionTitle}>
-                Invoice Preview
-            </h2>
+            <div className="mb-8">
 
-            <div className="mb-6">
+                <h1 className="text-3xl font-bold">
+                    Invoice
+                </h1>
 
                 <p>
-                    <strong>Client:</strong> {invoice.client_name}
+                    Invoice Period:
+                    {' '}
+                    {invoice.start_date}
+                    {' '}
+                    -
+                    {' '}
+                    {invoice.end_date}
                 </p>
 
+            </div>
+
+            <div className="mb-8">
+
+                <h2 className="text-xl font-semibold">
+                    Bill To:
+                </h2>
+
                 <p>
-                    <strong>Billing Period:</strong>{" "}
-                    {invoice.start_date} - {invoice.end_date}
+                    {invoice.client_name}
                 </p>
 
             </div>
@@ -92,24 +107,12 @@ function InvoicePreview({invoice}: Props) {
 
                             <td className={ui.tableCell}>
                                 $
-                                {Number(item.hourly_rate).toLocaleString(
-                                    undefined,
-                                    {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }
-                                )}
+                                {Number(item.hourly_rate).toFixed(2)}
                             </td>
 
                             <td className={ui.tableCell}>
                                 $
-                                {Number(item.amount).toLocaleString(
-                                    undefined,
-                                    {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }
-                                )}
+                                {Number(item.amount).toFixed(2)}
                             </td>
 
                         </tr>
@@ -120,27 +123,18 @@ function InvoicePreview({invoice}: Props) {
 
             </table>
 
-            <div className="mt-6 space-y-1 text-right">
+            <div className="mt-8 text-right">
 
                 <p>
-
-                    <strong>Total Hours:</strong>{" "}
+                    Total Hours:
+                    {' '}
                     {invoice.total_hours}
-
                 </p>
 
-                <p className="text-lg font-semibold">
-
-                    <strong>Total Due:</strong>{" "}
-                    $
-                    {Number(invoice.total_amount).toLocaleString(
-                        undefined,
-                        {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        }
-                    )}
-
+                <p className="text-xl font-bold">
+                    Total Due:
+                    {' '}
+                    ${Number(invoice.total_amount).toFixed(2)}
                 </p>
 
             </div>
@@ -149,4 +143,4 @@ function InvoicePreview({invoice}: Props) {
     )
 }
 
-export default InvoicePreview
+export default PrintableInvoice

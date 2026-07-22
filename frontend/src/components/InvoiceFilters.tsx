@@ -7,6 +7,8 @@ import type { Project } from '../types/project'
 
 import { ui } from '../styles/ui'
 
+import { getPreviousTwoWeekPeriod } from '../utils/dates'
+
 
 
 interface InvoiceFiltersProps {
@@ -26,8 +28,10 @@ function InvoiceFilters({onPreview}: InvoiceFiltersProps) {
     const [clientId, setClientId] = useState<number | null>(null)
     const [projectId, setProjectId] = useState<number | null>(null)
 
-    const [startDate, setStartDate] = useState('')
-    const [endDate, setEndDate] = useState('')
+    const defaultPeriod = getPreviousTwoWeekPeriod()
+
+    const [startDate, setStartDate] = useState(defaultPeriod.startDate)
+    const [endDate, setEndDate] = useState(defaultPeriod.endDate)
 
 
     useEffect(() => {
@@ -122,7 +126,11 @@ function InvoiceFilters({onPreview}: InvoiceFiltersProps) {
                     <select
                         className={ui.select}
                         value={projectId ?? ''}
-                        onChange={(event) => setProjectId(Number(event.target.value))}
+                        onChange={(event) => {
+                            const value = event.target.value
+                            setProjectId(value ? Number(value) : null)
+                        }}
+                        disabled={!clientId}
                     >
 
                         <option value="">

@@ -4,11 +4,14 @@ from decimal import Decimal
 
 
 
-class InvoiceProjectSummary(BaseModel):
+class InvoiceLineItem(BaseModel):
 
-    project_id: int
+    id: int
+    work_date: date
     project_name: str
+    description: str | None
     hours: Decimal
+    hourly_rate: Decimal
     amount: Decimal
 
 
@@ -18,6 +21,6 @@ class InvoicePreview(BaseModel):
     client_name: str
     start_date: date
     end_date: date
-    projects: list[InvoiceProjectSummary]
+    line_items: list[InvoiceLineItem]
     total_hours: Decimal
     total_amount: Decimal
