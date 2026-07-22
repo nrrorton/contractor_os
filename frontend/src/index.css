@@ -11,27 +11,73 @@ body {
 
 @media print {
 
-  body * {
-    visibility: hidden;
+  @page {
+    size: landscape;
+    margin: 0.5in;
   }
 
-  .print-area,
-  .print-area * {
-    visibility: visible;
-  }
-
-  .print-area {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
+  html,
+  body {
+    background: white !important;
+    color: black !important;
   }
 
   .no-print {
-    display: none;
+    display: none !important;
   }
 
-  @page {
-    margin: 1in;
+  .app-shell {
+    min-height: 0 !important;
+    background: white !important;
   }
+
+  .app-main {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .invoice-document {
+    width: 100%;
+    margin: 0;
+    padding: 0 !important;
+
+    background: white !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+
+  .invoice-page {
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .invoice-page > div {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .invoice-document table {
+    font-size: 10px;
+  }
+
+  .invoice-document thead {
+    display: table-header-group
+  }
+
+  .invoice-document tr {
+    page-break-inside: avoid;
+  }
+
+  .invoice-title {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
 }

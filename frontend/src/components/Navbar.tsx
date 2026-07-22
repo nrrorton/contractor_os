@@ -14,7 +14,7 @@ function Navbar() {
     }
 
     return (
-        <nav className="bg-white border-b shadow-sm">
+        <nav className="bg-white border-b shadow-sm no-print">
 
             <div className="mx-auto flex max-w-6xl items-center justify-between p-4">
                 <h2 className="text-xl font-bold">

@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import InvoiceFilters from '../components/InvoiceFilters'
 import InvoicePreview from '../components/InvoicePreview'
-import PrintableInvoice from '../components/PrintableInvoice'
 
 import type { InvoicePreview as InvoicePreviewData } from '../types/invoice'
 import { ui } from '../styles/ui'
@@ -18,6 +17,7 @@ function Invoices () {
 
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [showDescriptions, setShowDescriptions] = useState(true)
 
     async function handlePreview(
         clientId: number,
@@ -58,15 +58,19 @@ function Invoices () {
     }
 
     return (
-        <div className={ui.page}>
+        <div className={`${ui.page} invoice-page`}>
 
-            <h1 className={ui.pageTitle}>
+            <h1 className={`${ui.pageTitle} no-print`}>
                 Invoices
             </h1>
 
-            <InvoiceFilters 
-                onPreview={handlePreview}
-            />
+            <div className="no-print">
+
+                <InvoiceFilters 
+                    onPreview={handlePreview}
+                />
+
+            </div>
 
             {error && (
                 <div className="mt-4 text-red-600">
@@ -82,18 +86,41 @@ function Invoices () {
 
             {invoice && (
 
-                <div className="space-y-6">
+                <div className="mt-6 space-y-6">
 
-                    <InvoicePreview invoice={invoice} />
+                    <InvoicePreview 
+                        invoice={invoice}
+                        showDescriptions={showDescriptions} 
+                    />
 
-                    <button
-                        className={`${ui.button} no-print`}
-                        onClick={handlePrint}
-                    >
-                        Print Invoice
-                    </button>
+                    <div className="flex items-center justify-between no-print">
 
-                    <PrintableInvoice invoice={invoice} />
+                        <label
+                            htmlFor="show-descriptions"
+                            className="flex items-center gap-2"
+                        >
+
+                            <input
+                                id="show-descriptions"
+                                type="checkbox"
+                                checked={showDescriptions}
+                                onChange={(event) => setShowDescriptions(event.target.checked)}
+                            />
+
+                            <span>
+                                Include work descriptions
+                            </span>
+
+                        </label>
+
+                        <button
+                            className={ui.button}
+                            onClick={handlePrint}
+                        >
+                            Print Invoice
+                        </button>
+
+                    </div>
 
                 </div>
 

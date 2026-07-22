@@ -1,36 +1,48 @@
 import type { InvoicePreview as InvoicePreviewType } from '../types/invoice'
+
 import { ui } from '../styles/ui'
+
+import { dateFormatter, currencyFormatter } from '../utils/formatters'
 
 
 
 interface Props {
     invoice: InvoicePreviewType
+    showDescriptions: boolean
 }
 
 
-function InvoicePreview({invoice}: Props) {
+function InvoicePreview({invoice, showDescriptions}: Props) {
 
     return (
 
-        <div className={`${ui.card} ${ui.sectionSpacing}`}>
+        <div className={`invoice-document ${ui.card}`}>
 
-            <h2 className={ui.sectionTitle}>
-                Invoice Preview
+            <h2 className="invoice-title">
+                Invoice
             </h2>
 
-            <div className="mb-6">
+            <div className="mb-8 space-y-2">
 
-                <p>
-                    <strong>Client:</strong> {invoice.client_name}
-                </p>
+                <div>
 
-                <p>
-                    <strong>Billing Period:</strong>{" "}
-                    {invoice.start_date} - {invoice.end_date}
-                </p>
+                    <h3 className="font-semibold">
+                        Bill To: {invoice.client_name}
+                    </h3>
+
+                </div>
+
+                <div>
+
+                    <strong>Billing Period:</strong>{' '}
+                    {dateFormatter.format(new Date(invoice.start_date))}
+                    {" - "}
+                    {dateFormatter.format(new Date(invoice.end_date))}
+
+                </div>
 
             </div>
-
+            
             <table className={ui.table}>
 
                 <thead>
@@ -45,9 +57,13 @@ function InvoicePreview({invoice}: Props) {
                             Project
                         </th>
 
-                        <th className={ui.tableHeading}>
-                            Description
-                        </th>
+                        {showDescriptions && (
+                        
+                            <th className={ui.tableHeading}>
+                                Description
+                            </th>
+
+                        )}
 
                         <th className={ui.tableHeading}>
                             Hours
@@ -75,41 +91,31 @@ function InvoicePreview({invoice}: Props) {
                         >
 
                             <td className={ui.tableCell}>
-                                {item.work_date}
+                                {dateFormatter.format(new Date(item.work_date))}
                             </td>
 
                             <td className={ui.tableCell}>
                                 {item.project_name}
                             </td>
 
-                            <td className={ui.tableCell}>
-                                {item.description ?? 'N/A'}
-                            </td>
+                            {showDescriptions && (
+
+                                <td className={ui.tableCell}>
+                                    {item.description ?? 'N/A'}
+                                </td>
+
+                            )}
 
                             <td className={ui.tableCell}>
                                 {item.hours}
                             </td>
 
                             <td className={ui.tableCell}>
-                                $
-                                {Number(item.hourly_rate).toLocaleString(
-                                    undefined,
-                                    {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }
-                                )}
+                                {currencyFormatter.format(Number(item.hourly_rate))}
                             </td>
 
                             <td className={ui.tableCell}>
-                                $
-                                {Number(item.amount).toLocaleString(
-                                    undefined,
-                                    {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }
-                                )}
+                                {currencyFormatter.format(Number(item.amount))}
                             </td>
 
                         </tr>
@@ -120,7 +126,7 @@ function InvoicePreview({invoice}: Props) {
 
             </table>
 
-            <div className="mt-6 space-y-1 text-right">
+            <div className="mt-8 pt-4 text-right space-y-2">
 
                 <p>
 
@@ -132,14 +138,7 @@ function InvoicePreview({invoice}: Props) {
                 <p className="text-lg font-semibold">
 
                     <strong>Total Due:</strong>{" "}
-                    $
-                    {Number(invoice.total_amount).toLocaleString(
-                        undefined,
-                        {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        }
-                    )}
+                    {currencyFormatter.format(Number(invoice.total_amount))}
 
                 </p>
 

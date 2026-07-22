@@ -4,11 +4,11 @@ import Navbar from './Navbar'
 
 function Layout() {
     return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="app-shell min-h-screen bg-slate-50">
 
             <Navbar />
 
-            <main className="mx-auto max-w-6xl p-6">
+            <main className="app-main mx-auto max-w-6xl p-6">
 
                 <Outlet />
 
