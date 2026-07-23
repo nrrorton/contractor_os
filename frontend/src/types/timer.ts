@@ -3,6 +3,7 @@ export interface ActiveTimer {
 
     id: number
     project_id: number
+    project_name: string
     work_date: string
     started_at: string
     ended_at: string | null

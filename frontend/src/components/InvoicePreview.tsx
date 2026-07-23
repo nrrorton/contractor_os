@@ -2,7 +2,7 @@ import type { InvoicePreview as InvoicePreviewType } from '../types/invoice'
 
 import { ui } from '../styles/ui'
 
-import { dateFormatter, currencyFormatter } from '../utils/formatters'
+import { formatDateOnly, currencyFormatter } from '../utils/formatters'
 
 
 
@@ -35,9 +35,9 @@ function InvoicePreview({invoice, showDescriptions}: Props) {
                 <div>
 
                     <strong>Billing Period:</strong>{' '}
-                    {dateFormatter.format(new Date(invoice.start_date))}
+                    {formatDateOnly(invoice.start_date)}
                     {" - "}
-                    {dateFormatter.format(new Date(invoice.end_date))}
+                    {formatDateOnly(invoice.end_date)}
 
                 </div>
 
@@ -91,7 +91,7 @@ function InvoicePreview({invoice, showDescriptions}: Props) {
                         >
 
                             <td className={ui.tableCell}>
-                                {dateFormatter.format(new Date(item.work_date))}
+                                {formatDateOnly(item.work_date)}
                             </td>
 
                             <td className={ui.tableCell}>

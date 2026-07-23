@@ -2,7 +2,7 @@ import { ui } from '../styles/ui'
 
 import type { TimeEntry } from '../types/time_entry'
 
-import { currencyFormatter, formatHours, dateFormatter } from '../utils/formatters'
+import { currencyFormatter, formatHours, formatDateOnly } from '../utils/formatters'
 
 
 
@@ -26,7 +26,7 @@ function TimeEntryCard({entry, projectName, onEdit, onArchive}: TimeEntryCardPro
             </h3>
 
             <p className={ui.mutedText}>
-                {dateFormatter.format(new Date(entry.work_date))}
+                {formatDateOnly(entry.work_date)}
             </p>
 
             <p className={ui.mutedText}>

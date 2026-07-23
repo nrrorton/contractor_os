@@ -4,8 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.dependencies.auth import get_current_user
 from app.models.user import User
-from app.schemas.time_entry import TimeEntryResponse
-from app.schemas.timer import TimerStart
+from app.schemas.timer import TimerStart, ActiveTimerResponse
 from app.services.timer_service import (
     start_timer, stop_timer, get_active_timer
 )
@@ -14,7 +13,7 @@ from app.services.timer_service import (
 router = APIRouter()
 
 
-@router.get('/timer/active', response_model=TimeEntryResponse | None)
+@router.get('/timer/active', response_model=ActiveTimerResponse | None)
 def get_active_timer_router(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
@@ -23,7 +22,7 @@ def get_active_timer_router(
     return get_active_timer(db, current_user)
 
 
-@router.post('/timer/start', response_model=TimeEntryResponse)
+@router.post('/timer/start', response_model=ActiveTimerResponse)
 def start_timer_router(
     timer: TimerStart,
     db: Session = Depends(get_db),
@@ -46,7 +45,7 @@ def start_timer_router(
         )
     
 
-@router.post('/timer/stop', response_model=TimeEntryResponse)
+@router.post('/timer/stop', response_model=ActiveTimerResponse)
 def stop_timer_router(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)

@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import useAuth from '../hooks/useAuth'
 
+import ActiveTimerWidget from './ActiveTimerWidget'
+
 
 function Navbar() {
 
@@ -65,6 +67,9 @@ function Navbar() {
                     </li>
 
                 </ul>
+
+                <ActiveTimerWidget />
+
                 
                 <button 
                     className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-900"

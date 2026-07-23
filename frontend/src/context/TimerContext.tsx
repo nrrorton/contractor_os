@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from 'react'
 
 import api from '../services/api'
 
+import useAuth from '../hooks/useAuth'
+
 import type { ActiveTimer, TimerStartData } from '../types/timer'
 
 
@@ -25,6 +27,8 @@ export function TimerProvider({
 }: {
     children: React.ReactNode
 }) {
+
+    const { token } = useAuth()
 
     const [activeTimer, setActiveTimer] = useState<ActiveTimer | null>(null)
     const [loading, setLoading] = useState(true)
@@ -70,8 +74,14 @@ export function TimerProvider({
 
     useEffect(() => {
 
-        refreshTimer()
-    }, [])
+        if (token) {
+            refreshTimer()
+            
+        } else {
+            setActiveTimer(null)
+            setLoading(false)
+        }
+    }, [token])
 
     return (
         <TimerContext.Provider

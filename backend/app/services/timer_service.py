@@ -1,4 +1,6 @@
-from datetime import datetime, timezone, date
+from datetime import datetime, timezone
+
+from zoneinfo import ZoneInfo
 
 from sqlalchemy.orm import Session
 
@@ -9,7 +11,23 @@ from app.schemas.timer import TimerStart
 
 
 
-def get_active_timer(
+def serialize_active_timer(entry: TimeEntry):
+
+    return {
+        'id': entry.id,
+        'project_id': entry.project_id,
+        'project_name': entry.project.name,
+        'work_date': entry.work_date,
+        'started_at': entry.started_at,
+        'ended_at': entry.ended_at,
+        'hours': entry.hours,
+        'description': entry.description,
+        'billable': entry.billable,
+        'hourly_rate': entry.hourly_rate
+    }
+
+
+def get_active_timer_entry(
         db: Session,
         current_user: User
 ):
@@ -23,6 +41,18 @@ def get_active_timer(
         ).first()
     )
 
+def get_active_timer(
+        db: Session,
+        current_user: User
+):
+
+    entry = get_active_timer_entry(db, current_user)
+
+    if entry is None:
+        return None
+
+    return serialize_active_timer(entry)
+
 
 def start_timer(
         db: Session,
@@ -30,7 +60,7 @@ def start_timer(
         current_user: User
 ):
     
-    active_timer = get_active_timer(db, current_user)
+    active_timer = get_active_timer_entry(db, current_user)
 
     if active_timer is not None:
         raise ValueError("Active timer already exists")
@@ -44,13 +74,15 @@ def start_timer(
 
     if project is None:
         raise LookupError("Project not found")
+
+    local_date = datetime.now(ZoneInfo("America/Chicago")).date()
     
     now = datetime.now(timezone.utc)
     
     entry = TimeEntry(
         user_id=current_user.id,
         project_id=timer.project_id,
-        work_date=now.date(),
+        work_date=local_date,
         started_at=now,
         ended_at=None,
         hours=0,
@@ -67,7 +99,7 @@ def start_timer(
     db.commit()
     db.refresh(entry)
 
-    return entry
+    return serialize_active_timer(entry)
 
 
 def stop_timer(
@@ -75,7 +107,7 @@ def stop_timer(
         current_user: User
 ):
     
-    entry = get_active_timer(db, current_user)
+    entry = get_active_timer_entry(db, current_user)
 
     if entry is None:
         return None
@@ -91,4 +123,4 @@ def stop_timer(
     db.commit()
     db.refresh(entry)
 
-    return entry
+    return serialize_active_timer(entry)
