@@ -37,6 +37,8 @@ app.include_router(timer.router)
 
 @app.get('/')
 def root():
-    return {
-        'message': 'ContractorOS API is running'
-    }
+    return {'message': 'ContractorOS API is running'}
+
+@app.get('/health')
+def health():
+    return {'status': 'healthy'}
