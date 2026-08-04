@@ -20,7 +20,7 @@ services:
       context: ./backend
     container_name: contractor-backend
     restart: always
-    depends on:
+    depends_on:
       postgres:
         condition: service_healthy
     environment:
